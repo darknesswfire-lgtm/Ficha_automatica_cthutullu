@@ -7,14 +7,16 @@
     <script src="./js/pericias.js"defer></script>
     <script src="./js/inventario.js"defer></script>
     <script src="./js/armazenamento.js"defer></script>
-    <script src="./script.js"defer></script>
     <link rel="stylesheet" href="./style.css">
     <title>Ficha Automatizada - Call of Cthulhu</title>
 </head>
 <body>
 <body>
+    
+    <!-- ================================================================= -->
+    <!-- TELA SECRETA DE LOGIN (S.A.D.M.)                                  -->
+    <!-- ================================================================= -->
     <div id="tela-login-secreta">
-        
         <div class="caixa-login">
             <h1 style="color: #d32f2f; margin-bottom: 5px;">S.A.D.M.</h1>
             <p style="letter-spacing: 2px; font-size: 0.8em; margin-bottom: 30px;">SECÇÃO DE ARQUIVOS E DADOS MÍSTICOS</p>
@@ -37,38 +39,40 @@
         <div class="creditos-terminal">
             // SYSTEM_DEV: Ficha Desenvolvida por Vinicius S. M.- 2026
         </div>
-
     </div> 
-    <header>
 
-    <header>
-        <h1 style="text-align: center;">CONFIDENCIAL: Projeto Cthulhu</h1>
-
-
-    </header>
-<!-- ================================================================= -->
-<!-- #region 01. BARRA DE CONTROLE SUPERIOR                            -->
-<!-- ================================================================= -->
-<header class="barra-controle">
-    <!-- Grupo 1: Ferramentas de Jogo -->
-    <div class="grupo-botoes">
-        <button class="btn-controle" onclick="window.location.href='inventario.html'">🎒 Inventário</button>
-        <button class="btn-controle" onclick="window.location.href='combate.html'">⚔️ Combate</button>
-        <button class="btn-controle" onclick="window.print()">🖨️ Imprimir PDF</button>
-    </div>
-    
-    <!-- Grupo 2: Gerenciamento da Ficha -->
-    <div class="grupo-botoes">
-        <button class="btn-controle btn-acao" onclick="exportarFichaJSON()">Salvar Ficha (JSON)</button>
-        <button class="btn-controle btn-acao" onclick="document.getElementById('input-importar').click()"> Carregar Ficha (JSON)</button>
-        <input type="file" id="input-importar" style="display: none;" accept=".json" onchange="importarFichaJSON(event)">
+    <!-- ================================================================= -->
+    <!-- CONTEÚDO PRINCIPAL (A FICHA) - Fica escondido até o login         -->
+    <!-- ================================================================= -->
+    <main id="conteudo-principal" style="display: none;">
         
-        <button class="btn-controle btn-perigo" onclick="limparFicha()">Resetar Ficha</button>
-    </div>
-</header>
-<!-- #endregion -->
+        <header>
+            <h1 style="text-align: center;">CONFIDENCIAL: Projeto Cthulhu</h1>
+        </header>
 
+        <!-- BARRA DE CONTROLE SUPERIOR -->
+        <header class="barra-controle">
+            <!-- Grupo 1: Ferramentas de Jogo -->
+            <div class="grupo-botoes">
+                <button class="btn-controle" onclick="window.location.href='inventario.html'">🎒 Inventário</button>
+                <button class="btn-controle" onclick="window.location.href='combate.html'">⚔️ Combate</button>
+                <button class="btn-controle" onclick="window.print()">🖨️ Imprimir PDF</button>
+            </div>
+            
+            <!-- Grupo 2: Gerenciamento da Ficha -->
+            <div class="grupo-botoes">
+                <button class="btn-controle btn-acao" onclick="exportarFichaJSON()">Salvar Ficha (JSON)</button>
+                <button class="btn-controle btn-acao" onclick="document.getElementById('input-importar').click()"> Carregar Ficha (JSON)</button>
+                <input type="file" id="input-importar" style="display: none;" accept=".json" onchange="importarFichaJSON(event)">
+                
+                <button class="btn-controle btn-perigo" onclick="limparFicha()">Resetar Ficha</button>
+            </div>
+        </header>
 
+        <!-- ATENÇÃO: Todo o restante da sua ficha (Atributos, Perícias, etc.) 
+deve ficar AQUI DENTRO, antes de fechar a tag </main> abaixo! -->
+
+    </main>
     <div class="ficha-container">
     
     <div id="aba-ficha" class="conteudo-aba ativa">

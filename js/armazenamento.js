@@ -7,24 +7,26 @@ function acessarSistema() {
     let campoSenha = document.getElementById('codigo-acesso');
     let senhaDigitada = campoSenha.value;
 
-    // 2. Define a senha secreta (pode alterar para a que desejar)
+    // 2. Define a senha secreta 
     let senhaSecreta = "123";
 
     // 3. Verifica se a senha está correta
     if (senhaDigitada === senhaSecreta) {
-        // Se acertou: Esconde a tela de login
-        document.getElementById('painel-sadm').style.display = 'none';
+        
+        // Se acertou: Esconde a tela de login (usando o ID exato do seu HTML)
+        document.getElementById('tela-login-secreta').style.display = 'none';
         
         // E mostra o conteúdo principal (a ficha)
         document.getElementById('conteudo-principal').style.display = 'block';
         
     } else {
-        // Se errou: Mostra um aviso e limpa o campo
-        alert("Acesso Negado. Código de Arquivo incorreto.");
+        
+        // Se errou: Mostra a sua mensagem vermelha de erro e limpa a senha
+        document.getElementById('msg-erro').style.display = 'block';
         campoSenha.value = ""; 
+        
     }
 }
-
 // =================================================================
 // 💾 EXPORTAR FICHA (Gera o arquivo .json automaticamente)
 // =================================================================
