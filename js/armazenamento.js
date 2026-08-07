@@ -6,7 +6,7 @@
 function acessarSistema() {
     let campoSenha = document.getElementById('codigo-acesso');
     let senhaDigitada = campoSenha.value;
-    let senhaSecreta = "cthulhu2024";
+    let senhaSecreta = "123";
 
     if (senhaDigitada === senhaSecreta) {
         // SUCESSO! Entrega a "pulseira VIP" ao navegador
