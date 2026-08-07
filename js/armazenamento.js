@@ -8,7 +8,7 @@ function acessarSistema() {
     let senhaDigitada = campoSenha.value;
 
     // 2. Define a senha secreta (pode alterar para a que desejar)
-    let senhaSecreta = "cthulhu2024";
+    let senhaSecreta = "";
 
     // 3. Verifica se a senha está correta
     if (senhaDigitada === senhaSecreta) {
