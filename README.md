@@ -1,1 +1,0 @@
-# Ficha_automatica_cthutullu
