@@ -694,3 +694,20 @@ input[type=number]::-webkit-outer-spin-button {
     font-family: 'Courier New', Courier, monospace;
     font-size: 0.9em;
 }
+
+
+/* =================================================================
+   4. CONTROLO DA TELA DE LOGIN (S.A.D.M.)
+================================================================= */
+
+/* Esconde todo o conteúdo principal (a ficha) quando a página carrega */
+#conteudo-principal {
+    display: none; 
+}
+
+/* Mostra a tela de login por padrão */
+#painel-sadm {
+    display: block;
+    text-align: center;
+    margin-top: 50px;
+}

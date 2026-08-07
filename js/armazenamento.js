@@ -1,4 +1,31 @@
 // =================================================================
+// 🔐 SISTEMA DE LOGIN (S.A.D.M.)
+// =================================================================
+
+function acessarSistema() {
+    // 1. Pega o valor que o jogador digitou no campo de senha
+    let campoSenha = document.getElementById('codigo-acesso');
+    let senhaDigitada = campoSenha.value;
+
+    // 2. Define a senha secreta (pode alterar para a que desejar)
+    let senhaSecreta = "cthulhu2024";
+
+    // 3. Verifica se a senha está correta
+    if (senhaDigitada === senhaSecreta) {
+        // Se acertou: Esconde a tela de login
+        document.getElementById('painel-sadm').style.display = 'none';
+        
+        // E mostra o conteúdo principal (a ficha)
+        document.getElementById('conteudo-principal').style.display = 'block';
+        
+    } else {
+        // Se errou: Mostra um aviso e limpa o campo
+        alert("Acesso Negado. Código de Arquivo incorreto.");
+        campoSenha.value = ""; 
+    }
+}
+
+// =================================================================
 // 💾 EXPORTAR FICHA (Gera o arquivo .json automaticamente)
 // =================================================================
 function exportarFichaJSON() {
