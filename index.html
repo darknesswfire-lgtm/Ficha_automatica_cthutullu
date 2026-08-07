@@ -1,0 +1,605 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="./js/atributos.js"defer></script>
+    <script src="./js/pericias.js"defer></script>
+    <script src="./js/inventario.js"defer></script>
+    <script src="./js/armazenamento.js"defer></script>
+    <script src="./script.js"defer></script>
+    <link rel="stylesheet" href="./style.css">
+    <title>Ficha Automatizada - Call of Cthulhu</title>
+</head>
+<body>
+<body>
+    <div id="tela-login-secreta">
+        
+        <div class="caixa-login">
+            <h1 style="color: #d32f2f; margin-bottom: 5px;">S.A.D.M.</h1>
+            <p style="letter-spacing: 2px; font-size: 0.8em; margin-bottom: 30px;">SECÇÃO DE ARQUIVOS E DADOS MÍSTICOS</p>
+            
+            <div class="selo-top-secret">CONFIDENCIAL</div>
+
+            <p class="texto-terminal"> > Insira credenciais para acesso...</p>
+            
+            <label>AGENTE RESPONSÁVEL:</label>
+            <input type="text" id="agente-nome" placeholder="Ex: Agente Smith">
+            
+            <label>CÓDIGO DE ACESSO:</label>
+            <input type="password" id="agente-senha" placeholder="••••••">
+
+            <button onclick="acessarSistema()">🔓 AUTORIZAR ACESSO</button>
+            
+            <p id="msg-erro" style="color: red; display: none; margin-top: 10px;">⛔ ACESSO NEGADO</p>
+        </div>
+
+        <div class="creditos-terminal">
+            // SYSTEM_DEV: Ficha Desenvolvida por Vinicius S. M.- 2026
+        </div>
+
+    </div> 
+    <header>
+
+    <header>
+        <h1 style="text-align: center;">CONFIDENCIAL: Projeto Cthulhu</h1>
+
+
+    </header>
+<!-- ================================================================= -->
+<!-- #region 01. BARRA DE CONTROLE SUPERIOR                            -->
+<!-- ================================================================= -->
+<header class="barra-controle">
+    <!-- Grupo 1: Ferramentas de Jogo -->
+    <div class="grupo-botoes">
+        <button class="btn-controle" onclick="window.location.href='inventario.html'">🎒 Inventário</button>
+        <button class="btn-controle" onclick="window.location.href='combate.html'">⚔️ Combate</button>
+        <button class="btn-controle" onclick="window.print()">🖨️ Imprimir PDF</button>
+    </div>
+    
+    <!-- Grupo 2: Gerenciamento da Ficha -->
+    <div class="grupo-botoes">
+        <button class="btn-controle btn-acao" onclick="exportarFichaJSON()">Salvar Ficha (JSON)</button>
+        <button class="btn-controle btn-acao" onclick="document.getElementById('input-importar').click()"> Carregar Ficha (JSON)</button>
+        <input type="file" id="input-importar" style="display: none;" accept=".json" onchange="importarFichaJSON(event)">
+        
+        <button class="btn-controle btn-perigo" onclick="limparFicha()">Resetar Ficha</button>
+    </div>
+</header>
+<!-- #endregion -->
+
+
+    <div class="ficha-container">
+    
+    <div id="aba-ficha" class="conteudo-aba ativa">
+        <h2>Dados do Investigador</h2>
+        
+        <div class="foto-container" style="display: flex; justify-content: flex-start; margin-bottom: 20px;">
+            
+            <div style="position: relative; width: 512px; height: 512px; border: 2px dashed #555; display: flex; align-items: center; justify-content: center; overflow: hidden; background: #222; border-radius: 4px;">
+                
+                <span class="texto-upload" onclick="document.getElementById('upload-foto').click()" style="cursor: pointer; color: #aaa; text-align: center; font-size: 1.2em;">
+                    FOTO<br>512px
+                </span>
+
+                <img id="img-preview" src="" style="display: none; width: 100%; height: 100%; object-fit: cover; cursor: pointer;" onclick="document.getElementById('upload-foto').click()">
+
+                <button id="btn-remove-foto" onclick="removerFoto(event)" style="position: absolute; top: 0; right: 0; background: rgba(255,0,0,0.8); color: white; border: none; width: 30px; height: 30px; display: none; cursor: pointer; z-index: 10; font-size: 16px;">X</button>
+            </div>
+
+            <input type="file" id="upload-foto" accept="image/*" onchange="carregarFoto(event)" style="display: none;">
+        </div>
+        <div class="area-dados">
+            <div class="campo-texto">
+                <label>Nome:</label>
+                <input type="text" id="nome_investigador">
+            </div>
+            
+            <div class="campo-texto">
+                <label>Jogador:</label>
+                <input type="text" id="nome_jogador">
+            </div>
+            
+            <div class="campo-texto">
+                <label>Ocupação:</label>
+                <input type="text" id="ocupacao">
+            </div>
+            
+            <div class="campo-texto">
+                <label>Idade:</label>
+                <input type="text" id="idade">
+            </div>
+            
+            <div class="campo-texto">
+                <label>Sexo:</label>
+                <input type="text" id="sexo">
+            </div>
+            
+            <div class="campo-texto">
+                <label>Residência:</label>
+                <input type="text" id="residencia">
+            </div>
+            
+            <div class="campo-texto">
+                <label>Local de Nascimento:</label>
+                <input type="text" id="natalidade">
+            </div>
+        </div>
+    </div>
+</div>
+    
+                <h2>Histórico e Antecedentes</h2>
+                <div class="area-dados">
+                    <div class="campo-texto full-width">
+                        <label>Descrição Pessoal:</label>
+                        <textarea id="backstory"></textarea>
+                    </div>
+                    
+                    <div class="campo-texto full-width">
+                        <label>Ideologia/Crenças:</label>
+                        <textarea id="crencas"></textarea>
+                    </div>
+                    
+                    <div class="campo-texto full-width">
+                        <label>Pessoas Importantes:</label>
+                        <textarea id="pessoas"></textarea>
+                    </div>
+                    
+                    <div class="campo-texto full-width">
+                        <label>Locais Significativos:</label>
+                        <textarea id="locais"></textarea>
+                    </div>
+                    
+                    <div class="campo-texto full-width">
+                        <label>Pertences Queridos:</label>
+                        <textarea id="pertences"></textarea>
+                    </div>
+                    
+                    <div class="campo-texto full-width">
+                        <label>Características:</label>
+                        <textarea id="caracteristicas"></textarea>
+                    </div>
+    
+                    <div class="campo-texto full-width">
+                        <label>Lesões e Cicatrizes:</label>
+                        <textarea id="lesoes"></textarea>
+                    </div>
+                    
+                    <div class="campo-texto full-width">
+                        <label>Fobias e Manias:</label>
+                        <textarea id="fobias"></textarea>
+                    </div>
+                </div>
+            </div>
+    
+
+            </div>
+        </div>
+
+        <h2>Status Atual</h2>
+        <div class="status-container">
+            
+            <div class="status-box">
+                <span class="titulo-status hp">VIDA (HP)</span>
+                <div class="status-grid">
+                    <div>
+                        <span class="status-label">Máximo</span><br>
+                        <span id="hp-max" style="font-weight: bold;">0</span>
+                    </div>
+                    <div>
+                        <span class="status-label">Perdido</span><br>
+                        <input type="number" id="hp-lost" class="input-perdido" placeholder="0" oninput="atualizarDerivados()">
+                    </div>
+                    <div class="valor-atual-box">
+                        <span class="status-label">Atual</span>
+                        <span id="hp-current" class="status-valor hp">0</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="status-box">
+                <span class="titulo-status san">SANIDADE</span>
+                <div class="status-grid">
+                    <div>
+                        <span class="status-label">Inicial</span><br>
+                        <span id="san-max" style="font-weight: bold;">0</span>
+                    </div>
+                    <div>
+                        <span class="status-label">Perdido</span><br>
+                        <input type="number" id="san-lost" class="input-perdido" placeholder="0" oninput="atualizarDerivados()">
+                    </div>
+                    <div class="valor-atual-box">
+                        <span class="status-label">Atual</span>
+                        <span id="san-current" class="status-valor san">0</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="status-box">
+                <span class="titulo-status mp">MAGIA (MP)</span>
+                <div class="status-grid">
+                    <div>
+                        <span class="status-label">Máximo</span><br>
+                        <span id="mp-max" style="font-weight: bold;">0</span>
+                    </div>
+                    <div>
+                        <span class="status-label">Gasto</span><br>
+                        <input type="number" id="mp-lost" class="input-perdido" placeholder="0" oninput="atualizarDerivados()">
+                    </div>
+                    <div class="valor-atual-box">
+                        <span class="status-label">Atual</span>
+                        <span id="mp-current" class="status-valor mp">0</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <h2>Atributos Base</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Atributo</th>
+                    <th>Valor</th>
+                    <th>1/2</th>
+                    <th>1/5</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr><td>Força (STR)</td><td><input type="number" id="str" oninput="calcular('str')"></td><td><span id="str-half">-</span></td><td><span id="str-fifth">-</span></td></tr>
+                <tr><td>Constituição (CON)</td><td><input type="number" id="con" oninput="calcular('con')"></td><td><span id="con-half">-</span></td><td><span id="con-fifth">-</span></td></tr>
+                <tr><td>Tamanho (SIZ)</td><td><input type="number" id="siz" oninput="calcular('siz')"></td><td><span id="siz-half">-</span></td><td><span id="siz-fifth">-</span></td></tr>
+                <tr><td>Destreza (DEX)</td><td><input type="number" id="dex" oninput="calcular('dex')"></td><td><span id="dex-half">-</span></td><td><span id="dex-fifth">-</span></td></tr>
+                <tr><td>Aparência (APP)</td><td><input type="number" id="app" oninput="calcular('app')"></td><td><span id="app-half">-</span></td><td><span id="app-fifth">-</span></td></tr>
+                <tr><td>Inteligência (INT)</td><td><input type="number" id="int" oninput="calcular('int')"></td><td><span id="int-half">-</span></td><td><span id="int-fifth">-</span></td></tr>
+                <tr><td>Poder (POW)</td><td><input type="number" id="pow" oninput="calcular('pow')"></td><td><span id="pow-half">-</span></td><td><span id="pow-fifth">-</span></td></tr>
+                <tr><td>Educação (EDU)</td><td><input type="number" id="edu" oninput="calcular('edu')"></td><td><span id="edu-half">-</span></td><td><span id="edu-fifth">-</span></td></tr>
+            </tbody>
+        </table>
+    </div>
+
+    
+    <div class="grid-atributos-derivados" style="margin-top: 10px;">
+            
+            <div class="derivado-item">
+                <span class="label-derivado">Sorte (Luck)</span>
+                <div class="caixa-valor">
+                    <input type="number" id="luck" class="input-derivado-grande" placeholder="50">
+                </div>
+            </div>
+
+            <div class="derivado-item">
+                <span class="label-derivado">MOV (Desloc.)</span>
+                <div class="caixa-valor">
+                    <input type="number" id="mov" class="input-derivado-grande" placeholder="8">
+                </div>
+            </div>
+
+            <div class="derivado-item">
+                <span class="label-derivado">Bônus Dano (DB)</span>
+                <div class="caixa-valor">
+                    <input type="text" id="db" class="input-derivado-grande" placeholder="+1d4">
+                </div>
+            </div>
+
+            <div class="derivado-item">
+                <span class="label-derivado">Corpo (Build)</span>
+                <div class="caixa-valor">
+                    <input type="number" id="build" class="input-derivado-grande" placeholder="1">
+                </div>
+            </div>
+
+        </div>
+
+        <br>
+
+
+<h2>Perícias do Investigador</h2>
+<p style="font-size: 0.8em; color: #aaa;">Insira o valor TOTAL. Clique no "+" para adicionar especializações.</p>
+
+<div class="grid-pericias">
+    
+    <div class="pericia-item">
+        <span class="nome-pericia">Antropologia (01%)</span>
+        <input type="number" class="input-pericia" oninput="calcPericia(this)">
+        <div class="pericia-derivados"><span class="half">-</span>|<span class="fifth">-</span></div>
+    </div>
+
+    <div class="pericia-item">
+        <span class="nome-pericia">Arqueologia (01%)</span>
+        <input type="number" class="input-pericia" oninput="calcPericia(this)">
+        <div class="pericia-derivados"><span class="half">-</span>|<span class="fifth">-</span></div>
+    </div>
+
+    <div class="pericia-item">
+        <span class="nome-pericia">Armas de Fogo (Pistola) (20%)</span>
+        <input type="number" class="input-pericia" oninput="calcPericia(this)">
+        <div class="pericia-derivados"><span class="half">-</span>|<span class="fifth">-</span></div>
+    </div>
+    <div class="pericia-item">
+        <span class="nome-pericia">Armas de Fogo (Rifle) (25%)</span>
+        <input type="number" class="input-pericia" oninput="calcPericia(this)">
+        <div class="pericia-derivados"><span class="half">-</span>|<span class="fifth">-</span></div>
+    </div>
+    
+    <div class="grupo-especializacao">
+        <div class="cabecalho-spec" onclick="document.getElementById('spec-armas').style.display = document.getElementById('spec-armas').style.display === 'none' ? 'flex' : 'none'">
+            <span>Armas Exóticas</span>
+            <button class="btn-add-spec" onclick="event.stopPropagation(); addEspecializacao('spec-armas', 0)">+</button>
+        </div>
+        <div id="spec-armas" class="container-specs" style="display: none;">
+            </div>
+    </div>
+
+    <div class="pericia-item">
+        <span class="nome-pericia">Arremessar (20%)</span>
+        <input type="number" class="input-pericia" oninput="calcPericia(this)">
+        <div class="pericia-derivados"><span class="half">-</span>|<span class="fifth">-</span></div>
+    </div>
+
+    <div class="grupo-especializacao">
+        <div class="cabecalho-spec" onclick="document.getElementById('spec-arte').style.display = document.getElementById('spec-arte').style.display === 'none' ? 'flex' : 'none'">
+            <span>Arte/Ofício (05%)</span>
+            <button class="btn-add-spec" onclick="event.stopPropagation(); addEspecializacao('spec-arte', 5)">+</button>
+        </div>
+        <div id="spec-arte" class="container-specs" style="display: none;">
+            </div>
+    </div>
+
+    <div class="pericia-item">
+        <span class="nome-pericia">Avaliação (05%)</span>
+        <input type="number" class="input-pericia" oninput="calcPericia(this)">
+        <div class="pericia-derivados"><span class="half">-</span>|<span class="fifth">-</span></div>
+    </div>
+
+    <div class="pericia-item">
+        <span class="nome-pericia">Charme (15%)</span>
+        <input type="number" class="input-pericia" oninput="calcPericia(this)">
+        <div class="pericia-derivados"><span class="half">-</span>|<span class="fifth">-</span></div>
+    </div>
+
+    <div class="pericia-item">
+        <span class="nome-pericia">Chaveiro (01%)</span>
+        <input type="number" class="input-pericia" oninput="calcPericia(this)">
+        <div class="pericia-derivados"><span class="half">-</span>|<span class="fifth">-</span></div>
+    </div>
+
+    <div class="grupo-especializacao">
+        <div class="cabecalho-spec" onclick="document.getElementById('spec-ciencia').style.display = document.getElementById('spec-ciencia').style.display === 'none' ? 'flex' : 'none'">
+            <span>Ciências (01%)</span>
+            <button class="btn-add-spec" onclick="event.stopPropagation(); addEspecializacao('spec-ciencia', 1)">+</button>
+        </div>
+        <div id="spec-ciencia" class="container-specs" style="display: none;">
+            </div>
+    </div>
+
+    <div class="pericia-item">
+        <span class="nome-pericia">Consertos Elétricos (10%)</span>
+        <input type="number" class="input-pericia" oninput="calcPericia(this)">
+        <div class="pericia-derivados"><span class="half">-</span>|<span class="fifth">-</span></div>
+    </div>
+
+    <div class="pericia-item">
+        <span class="nome-pericia">Contabilidade (05%)</span>
+        <input type="number" class="input-pericia" oninput="calcPericia(this)">
+        <div class="pericia-derivados"><span class="half">-</span>|<span class="fifth">-</span></div>
+    </div>
+
+    <div class="pericia-item">
+        <span class="nome-pericia">Direito (05%)</span>
+        <input type="number" class="input-pericia" oninput="calcPericia(this)">
+        <div class="pericia-derivados"><span class="half">-</span>|<span class="fifth">-</span></div>
+    </div>
+
+    <div class="pericia-item">
+        <span class="nome-pericia">Dirigir Automóvel (20%)</span>
+        <input type="number" class="input-pericia" oninput="calcPericia(this)">
+        <div class="pericia-derivados"><span class="half">-</span>|<span class="fifth">-</span></div>
+    </div>
+
+    <div class="pericia-item">
+        <span class="nome-pericia">Disfarce (05%)</span>
+        <input type="number" class="input-pericia" oninput="calcPericia(this)">
+        <div class="pericia-derivados"><span class="half">-</span>|<span class="fifth">-</span></div>
+    </div>
+
+    <div class="pericia-item">
+        <span class="nome-pericia">Encontrar (25%)</span>
+        <input type="number" class="input-pericia" oninput="calcPericia(this)">
+        <div class="pericia-derivados"><span class="half">-</span>|<span class="fifth">-</span></div>
+    </div>
+
+    <div class="pericia-item">
+        <span class="nome-pericia">Escutar (20%)</span>
+        <input type="number" class="input-pericia" oninput="calcPericia(this)">
+        <div class="pericia-derivados"><span class="half">-</span>|<span class="fifth">-</span></div>
+    </div>
+
+    <div class="pericia-item">
+        <span class="nome-pericia">Esquiva (Metade da DEX)</span>
+        <input type="number" class="input-pericia" oninput="calcPericia(this)">
+        <div class="pericia-derivados"><span class="half">-</span>|<span class="fifth">-</span></div>
+    </div>
+
+    <div class="pericia-item">
+        <span class="nome-pericia">Furtividade (20%)</span>
+        <input type="number" class="input-pericia" oninput="calcPericia(this)">
+        <div class="pericia-derivados"><span class="half">-</span>|<span class="fifth">-</span></div>
+    </div>
+
+    <div class="pericia-item">
+        <span class="nome-pericia">História (05%)</span>
+        <input type="number" class="input-pericia" oninput="calcPericia(this)">
+        <div class="pericia-derivados"><span class="half">-</span>|<span class="fifth">-</span></div>
+    </div>
+
+    <div class="pericia-item">
+        <span class="nome-pericia">Intimidação (15%)</span>
+        <input type="number" class="input-pericia" oninput="calcPericia(this)">
+        <div class="pericia-derivados"><span class="half">-</span>|<span class="fifth">-</span></div>
+    </div>
+
+    <div class="pericia-item">
+        <span class="nome-pericia">Lábia (05%)</span>
+        <input type="number" class="input-pericia" oninput="calcPericia(this)">
+        <div class="pericia-derivados"><span class="half">-</span>|<span class="fifth">-</span></div>
+    </div>
+
+    <div class="pericia-item">
+        <span class="nome-pericia">Língua Nativa (EDU)</span>
+        <input type="number" class="input-pericia" oninput="calcPericia(this)">
+        <div class="pericia-derivados"><span class="half">-</span>|<span class="fifth">-</span></div>
+    </div>
+    
+    <div class="grupo-especializacao">
+        <div class="cabecalho-spec" onclick="document.getElementById('spec-linguas').style.display = document.getElementById('spec-linguas').style.display === 'none' ? 'flex' : 'none'">
+            <span>Línguas Outras (01%)</span>
+            <button class="btn-add-spec" onclick="event.stopPropagation(); addEspecializacao('spec-linguas', 1)">+</button>
+        </div>
+        <div id="spec-linguas" class="container-specs" style="display: none;">
+            </div>
+    </div>
+
+    <div class="pericia-item">
+        <span class="nome-pericia">Luta (Briga) (25%)</span>
+        <input type="number" class="input-pericia" oninput="calcPericia(this)">
+        <div class="pericia-derivados"><span class="half">-</span>|<span class="fifth">-</span></div>
+    </div>
+
+    <div class="grupo-especializacao">
+        <div class="cabecalho-spec" onclick="document.getElementById('spec-luta').style.display = document.getElementById('spec-luta').style.display === 'none' ? 'flex' : 'none'">
+            <span>Luta (Outras)</span>
+            <button class="btn-add-spec" onclick="event.stopPropagation(); addEspecializacao('spec-luta', 0)">+</button>
+        </div>
+        <div id="spec-luta" class="container-specs" style="display: none;">
+            </div>
+    </div>
+
+    <div class="pericia-item">
+        <span class="nome-pericia">Medicina (01%)</span>
+        <input type="number" class="input-pericia" oninput="calcPericia(this)">
+        <div class="pericia-derivados"><span class="half">-</span>|<span class="fifth">-</span></div>
+    </div>
+
+    <div class="pericia-item">
+        <span class="nome-pericia">Mitos de Cthulhu (00%)</span>
+        <input type="number" class="input-pericia" oninput="calcPericia(this)">
+        <div class="pericia-derivados"><span class="half">-</span>|<span class="fifth">-</span></div>
+    </div>
+
+    <div class="pericia-item">
+        <span class="nome-pericia">Natação (20%)</span>
+        <input type="number" class="input-pericia" oninput="calcPericia(this)">
+        <div class="pericia-derivados"><span class="half">-</span>|<span class="fifth">-</span></div>
+    </div>
+
+    <div class="pericia-item">
+        <span class="nome-pericia">Navegação (10%)</span>
+        <input type="number" class="input-pericia" oninput="calcPericia(this)">
+        <div class="pericia-derivados"><span class="half">-</span>|<span class="fifth">-</span></div>
+    </div>
+
+    <div class="pericia-item">
+        <span class="nome-pericia">Ocultismo (10%)</span>
+        <input type="number" class="input-pericia" oninput="calcPericia(this)">
+        <div class="pericia-derivados"><span class="half">-</span>|<span class="fifth">-</span></div>
+    </div>
+
+    <div class="pericia-item">
+        <span class="nome-pericia">Operar Maquinário (10%)</span>
+        <input type="number" class="input-pericia" oninput="calcPericia(this)">
+        <div class="pericia-derivados"><span class="half">-</span>|<span class="fifth">-</span></div>
+    </div>
+
+    <div class="pericia-item">
+        <span class="nome-pericia">Persuasão (10%)</span>
+        <input type="number" class="input-pericia" oninput="calcPericia(this)">
+        <div class="pericia-derivados"><span class="half">-</span>|<span class="fifth">-</span></div>
+    </div>
+
+    <div class="grupo-especializacao">
+        <div class="cabecalho-spec" onclick="document.getElementById('spec-pilotar').style.display = document.getElementById('spec-pilotar').style.display === 'none' ? 'flex' : 'none'">
+            <span>Pilotar (01%)</span>
+            <button class="btn-add-spec" onclick="event.stopPropagation(); addEspecializacao('spec-pilotar', 1)">+</button>
+        </div>
+        <div id="spec-pilotar" class="container-specs" style="display: none;">
+            </div>
+    </div>
+
+    <div class="pericia-item">
+        <span class="nome-pericia">Prestidigitação (10%)</span>
+        <input type="number" class="input-pericia" oninput="calcPericia(this)">
+        <div class="pericia-derivados"><span class="half">-</span>|<span class="fifth">-</span></div>
+    </div>
+
+    <div class="pericia-item">
+        <span class="nome-pericia">Primeiros Socorros (30%)</span>
+        <input type="number" class="input-pericia" oninput="calcPericia(this)">
+        <div class="pericia-derivados"><span class="half">-</span>|<span class="fifth">-</span></div>
+    </div>
+
+    <div class="pericia-item">
+        <span class="nome-pericia">Psicanálise (01%)</span>
+        <input type="number" class="input-pericia" oninput="calcPericia(this)">
+        <div class="pericia-derivados"><span class="half">-</span>|<span class="fifth">-</span></div>
+    </div>
+
+    <div class="pericia-item">
+        <span class="nome-pericia">Psicologia (10%)</span>
+        <input type="number" class="input-pericia" oninput="calcPericia(this)">
+        <div class="pericia-derivados"><span class="half">-</span>|<span class="fifth">-</span></div>
+    </div>
+
+    <div class="pericia-item">
+        <span class="nome-pericia">Rastrear (10%)</span>
+        <input type="number" class="input-pericia" oninput="calcPericia(this)">
+        <div class="pericia-derivados"><span class="half">-</span>|<span class="fifth">-</span></div>
+    </div>
+
+    <div class="pericia-item">
+        <span class="nome-pericia">Saltar (20%)</span>
+        <input type="number" class="input-pericia" oninput="calcPericia(this)">
+        <div class="pericia-derivados"><span class="half">-</span>|<span class="fifth">-</span></div>
+    </div>
+
+    <div class="pericia-item">
+        <span class="nome-pericia">Sobrevivência (10%)</span>
+        <input type="number" class="input-pericia" oninput="calcPericia(this)">
+        <div class="pericia-derivados"><span class="half">-</span>|<span class="fifth">-</span></div>
+    </div>
+
+    <div class="pericia-item">
+        <span class="nome-pericia">Usar Biblioteca (20%)</span>
+        <input type="number" class="input-pericia" oninput="calcPericia(this)">
+        <div class="pericia-derivados"><span class="half">-</span>|<span class="fifth">-</span></div>
+    </div>
+
+    <div class="pericia-item">
+        <span class="nome-pericia">Usar Computadores (05%)</span>
+        <input type="number" class="input-pericia" oninput="calcPericia(this)">
+        <div class="pericia-derivados"><span class="half">-</span>|<span class="fifth">-</span></div>
+    </div>
+</div>
+    </div>
+
+    <div style="text-align: center; margin-top: 50px; margin-bottom: 50px; border-top: 1px solid #444; padding-top: 20px;">
+        <p style="color: #666;">Resetar Ficha</p>
+        <button onclick="resetarFicha()" style="background-color: #800; color: #fff; padding: 10px 20px; border: none; cursor: pointer;">
+            ⚠️ Apagar Tudo e Começar Novo Personagem
+        </button>
+    </div>
+
+
+</body>
+
+
+<div style="position: fixed; bottom: 10px; right: 15px; color: #888; font-size: 14px; font-weight: bold; font-family: monospace; background-color: rgba(255, 255, 255, 0.8); padding: 5px 10px; border-radius: 5px; pointer-events: none; z-index: 1000; border: 1px solid #ccc;">
+        Versão: Beta 0.10
+</div>
+
+    <footer class="rodape-vinicius">
+        <p>Ficha Desenvolvida por Vinicius S. M.- 2026</p>
+    </footer>
+
+    <script src="./script.js"defer></script>
+</body>
+</html>

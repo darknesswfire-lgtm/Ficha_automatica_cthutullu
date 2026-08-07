@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./style.css">
+    <script src="./js/atributos.js"defer></script>
+    <script src="./js/pericias.js"defer></script>
+    <script src="./js/inventario.js"defer></script>
+    <script src="./js/armazenamento.js"defer></script>
+    <script src="./script.js"defer></script>
+    <title>Resumo de Combate - Call of Cthulhu</title>
+    <style>
+        /* Estilos específicos para esta página de regras */
+        .container-regras {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .voltar-btn {
+            display: inline-block;
+            margin-bottom: 20px;
+            text-decoration: none;
+            color: #ccc;
+            border: 1px solid #555;
+            padding: 5px 15px;
+            border-radius: 4px;
+            transition: 0.3s;
+        }
+        .voltar-btn:hover {
+            background-color: #333;
+            color: white;
+        }
+
+        /* O Estilo do Acordeão (Details/Summary) */
+        details {
+            background-color: #1a1a1a;
+            margin-bottom: 10px;
+            border-radius: 5px;
+            border: 1px solid #333;
+            overflow: hidden;
+        }
+
+        summary {
+            padding: 15px;
+            background-color: #252525;
+            cursor: pointer;
+            font-weight: bold;
+            color: #d14949; /* Um tom avermelhado para destaque */
+            list-style: none; /* Remove a setinha padrão feia */
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        summary::after {
+            content: '+'; 
+            font-size: 1.2em;
+            font-weight: bold;
+        }
+
+        details[open] summary::after {
+            content: '-';
+        }
+
+        details[open] summary {
+            background-color: #333;
+            border-bottom: 1px solid #444;
+        }
+
+        .conteudo-regra {
+            padding: 15px;
+            line-height: 1.6;
+            color: #ddd;
+            font-size: 0.95em;
+        }
+
+        strong { color: #fff; }
+        .destaque { color: #f1c40f; } /* Amarelo para termos importantes */
+    </style>
+</head>
+<body>
+
+    <div class="container-regras">
+    <a href="./index.html" class="btn-imprimir" style="text-decoration: none; background-color: #555;">⬅ Voltar para Ficha</a>
+
+        <h1 style="text-align: center; color: #d14949;">Guia Rápido de Combate</h1>
+        <p style="text-align: center; color: #777; margin-bottom: 30px;">Call of Cthulhu 7ª Edição</p>
+
+        <details>
+            <summary>1. Quem age primeiro? (Iniciativa)</summary>
+            <div class="conteudo-regra">
+                <p>A ordem de combate é determinada pela <strong>DESTREZA (DEX)</strong>, do maior para o menor.</p>
+                <ul>
+                    <li><strong>Armas de Fogo Preparadas:</strong> Atiram em DEX + 50.</li>
+                    <li><strong>Surpresa:</strong> Se um lado for surpreendido, o outro lado ganha um turno extra ou age primeiro automaticamente.</li>
+                    <li><strong>Empate:</strong> Maior Habilidade de Combate desempata. Se persistir, rola-se 1d100.</li>
+                </ul>
+            </div>
+        </details>
+
+        <details>
+            <summary>2. O que posso fazer no meu turno?</summary>
+            <div class="conteudo-regra">
+                <p>Você pode se mover uma distância razoável e realizar uma ação:</p>
+                <ul>
+                    <li><strong>Ataque Corpo a Corpo:</strong> Briga ou Armas Brancas.</li>
+                    <li><strong>Ataque à Distância:</strong> Disparar armas de fogo ou arremessar.</li>
+                    <li><strong>Manobra de Combate:</strong> Derrubar, desarmar, empurrar (usa-se Tamanho/Força).</li>
+                    <li><strong>Fugir:</strong> Tentar escapar do combate.</li>
+                    <li><strong>Conjurar Magia:</strong> Tem tempo de conjuração variável.</li>
+                </ul>
+            </div>
+        </details>
+
+        <details>
+            <summary>3. Atacando e Defendendo (Corpo a Corpo)</summary>
+            <div class="conteudo-regra">
+                <p>Quando você é atacado, deve escolher: <strong>Contra-Atacar (Luta)</strong> ou <strong>Esquivar</strong>.</p>
+                <br>
+                <p><strong>COMBATE CORPO A CORPO (Comparação de Sucessos):</strong></p>
+                <ul>
+                    <li><strong>Falha vs Falha:</strong> Ninguém acerta.</li>
+                    <li><strong>Sucesso vs Falha:</strong> O Sucesso ganha.</li>
+                    <li><strong>Sucesso Normal vs Sucesso Bom/Extremo:</strong> O melhor sucesso ganha.</li>
+                    <li><strong>Empate (Contra-Ataque):</strong> O <span class="destaque">ATACANTE</span> ganha.</li>
+                    <li><strong>Empate (Esquiva):</strong> O <span class="destaque">DEFENSOR</span> ganha.</li>
+                </ul>
+                <p><em>Nota: Se você Contra-Atacar e vencer, VOCÊ causa dano no turno do inimigo. Se Esquivar e vencer, apenas não toma dano.</em></p>
+            </div>
+        </details>
+
+        <details>
+            <summary>4. Regras de Tiros</summary>
+            <div class="conteudo-regra">
+                <p><strong>Não se pode esquivar de balas</strong> (a menos que esteja preparado e vendo o atirador, então pode "Mergulhar para Cobertura", perdendo o próximo ataque).</p>
+                <ul>
+                    <li><strong>À Queima-Roupa:</strong> Ganha dado de bônus (facilitado).</li>
+                    <li><strong>Tiro Mirado:</strong> Gasta o turno mirando para ganhar dado de bônus no próximo.</li>
+                    <li><strong>Rajadas:</strong> Aumentam a chance de acertar mas gastam muita munição.</li>
+                    <li><strong>Tiro no Meio do Tumulto:</strong> Recebe dado de penalidade.</li>
+                </ul>
+            </div>
+        </details>
+
+        <details>
+            <summary>5. Ferimentos e Morte</summary>
+            <div class="conteudo-regra">
+                <p><strong>Dano Extremo:</strong> (Sucesso crítico no ataque) Dano máximo da arma + rolagem de dano extra.</p>
+                <hr style="border-color: #444;">
+                <p><strong>FERIMENTO GRAVE:</strong> Perder metade ou mais dos PV máximos num único golpe.</p>
+                <ul>
+                    <li>Você cai no chão (teste de CON para ficar consciente).</li>
+                    <li>Se chegar a 0 PV com Ferimento Grave: <span class="destaque">MORRENDO</span>. Precisa de Primeiros Socorros urgente.</li>
+                </ul>
+                <p><strong>Inconsciente:</strong> Chegar a 0 PV sem Ferimento Grave.</p>
+                <p><strong>Morte Instantânea:</strong> Se o dano for maior que seus PV Máximos totais + PV atuais.</p>
+            </div>
+        </details>
+
+        <details>
+            <summary>6. Manobras de Combate (Agarrar/Empurrar)</summary>
+            <div class="conteudo-regra">
+                <p>Para realizar uma manobra, compare a <strong>FORÇA (TAM)</strong> da manobra (Build).</p>
+                <ul>
+                    <li>Se seu TAM for menor que o do alvo: Dado de Penalidade.</li>
+                    <li>Se for muito menor (diferença de 2+): Impossível.</li>
+                </ul>
+                <p>Se for possível, role Luta (Briga). Se tiver sucesso, aplica-se o efeito (derrubar, desarmar, imobilizar).</p>
+            </div>
+        </details>
+
+    </div>
+
+    <hr style="border-color: #333; margin: 20px 0;">
+        <h2 style="text-align: center; color: #d14949; font-size: 1.2em;">Mecânicas de Sorte e Esforço</h2>
+
+<details>
+            <summary>7. Quais ações posso fazer no meu turno?</summary>
+            <div class="conteudo-regra">
+                <p>No teu turno, podes mover-te (até à tua taxa de Movimento - MOV) e realizar <strong>UMA</strong> das seguintes ações principais:</p>
+                <ul>
+                    <li><strong>Atacar (Corpo a Corpo):</strong> Usar Luta (Briga) ou armas brancas contra um alvo ao alcance.</li>
+                    <li><strong>Atacar (Distância):</strong> Disparar uma arma de fogo, arco ou arremessar algo. Pode-se atirar várias vezes dependendo da arma (ex: revólveres atiram até 3x, mas com penalidade).</li>
+                    <li><strong>Manobra de Combate:</strong> Uma ação física que não seja causar dano direto, como desarmar, empurrar, derrubar ou agarrar o inimigo (usa-se a perícia Luta e compara-se o TAM/Corpo).</li>
+                    <li><strong>Fugir:</strong> Escapar do combate ativo (pode iniciar uma Perseguição).</li>
+                    <li><strong>Conjurar Magia:</strong> O tempo de conjuração varia (algumas demoram 1 turno, outras minutos ou horas).</li>
+                    <li><strong>Ação de Movimento Extra:</strong> Abdicar do ataque para correr uma distância maior no turno.</li>
+                    <li><strong>Outra Ação:</strong> Prestar primeiros socorros, destrancar uma porta, recarregar a arma (leva 1 turno), pegar um item caído, etc.</li>
+                </ul>
+            </div>
+        </details>
+
+        <details>
+            <summary>8. Regras de Perseguição (Fuga e Caça)</summary>
+            <div class="conteudo-regra">
+                <p>Quando alguém tenta fugir e o inimigo vai atrás, entramos no modo Perseguição. Funciona em turnos, mas de forma diferente do combate:</p>
+                <ul>
+                    <li><strong>1. Velocidade (MOV):</strong> Compara-se a taxa de Movimento (MOV) de quem foge com a de quem persegue. Quem for mais rápido ganha "Ações de Movimento" extras (1 ação extra para cada ponto de diferença).</li>
+                    <li><strong>2. Teste de Constituição (CON):</strong> No início da perseguição (e a cada rodada extra dependendo do Guardião), rola-se CON. Se falhar, o personagem cansa e perde 1 ponto de MOV.</li>
+                    <li><strong>3. Ações na Perseguição:</strong> Com as tuas ações de movimento, podes:
+                        <ul>
+                            <li>Avançar um espaço/local.</li>
+                            <li>Tentar um ataque rápido (tiro em movimento, empurrão).</li>
+                            <li>Criar um obstáculo ou tentar esconder-te.</li>
+                        </ul>
+                    </li>
+                    <li><strong>4. Perigos e Barreiras:</strong> O caminho terá obstáculos (muros, multidões, carros). Para passar sem atraso, faz-se um teste de perícia (Saltar, Escalar, Esquivar). Se falhar, perdes ações de movimento ou sofres dano caindo.</li>
+                    <li><strong>5. Fim da Perseguição:</strong> Termina quando o fugitivo consegue quebrar a linha de visão e passar num teste de Furtividade, ou quando o perseguidor desiste/alcança o alvo.</li>
+                </ul>
+            </div>
+        </details>
+        <details>
+            <summary>9. Gastando Sorte (Luck)</summary>
+            <div class="conteudo-regra">
+                <p>Você pode alterar o resultado de um teste fracassado gastando seus pontos de Sorte atuais.</p>
+                <ul>
+                    <li><strong>Custo:</strong> 1 ponto de Sorte = -1% no resultado do dado. <br>
+                    <em>Exemplo: Você tem 50% em Pistola e rola 58. Pode gastar 8 pontos de Sorte para transformar o 58 em 50 (Sucesso).</em></li>
+                    <li><strong>Quando NÃO pode usar:</strong> Testes de Sorte, Testes de Sanidade, Testes de Dano ou Testes Forçados. (Nota: Por regra padrão, também não se usa em ataque/esquiva, mas verifique com seu Guardião).</li>
+                    <li><strong>Desastres:</strong> Não se pode gastar Sorte para evitar um Desastre (96-100) ou falha crítica.</li>
+                    <li><strong>Recuperação:</strong> Sorte gasta não volta sozinha! Você deve fazer um Teste de Melhora de Sorte no final do cenário ou depois de um descanso longo.</li>
+                </ul>
+            </div>
+        </details>
+
+</body>
+</html>
+

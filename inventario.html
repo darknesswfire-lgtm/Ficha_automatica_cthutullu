@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./style.css">
+    <script src="./js/atributos.js"defer></script>
+    <script src="./js/pericias.js"defer></script>
+    <script src="./js/inventario.js"defer></script>
+    <script src="./js/armazenamento.js"defer></script>
+    <script src="./script.js"defer></script>
+    <title>Inventário - Call of Cthulhu</title>
+</head>
+<body onload="carregarInventario()">
+
+    <header>
+        <h1 style="text-align: center; color: #9d4545;">Gestão de Inventário</h1>
+    </header>
+
+    <div class="area-botoes" style="text-align: left;">
+    <a href="./index.html" class="btn-imprimir" style="text-decoration: none; background-color: #555;">⬅ Voltar para Ficha</a>
+    </div>
+
+    <div class="ficha-container">
+        
+        <div class="painel-carga">
+<div>
+                <span class="status-label">Carga Máxima</span><br>
+                <input type="number" id="carga-max" value="0" oninput="salvarCargaMax(); calcularPeso()" style="font-size: 2em; font-weight: bold; color: #fff; background: transparent; border: none; border-bottom: 2px solid #555; width: 80px; text-align: center; outline: none;">
+            </div>
+            <div>
+                <span class="status-label">Peso Atual</span><br>
+                <span id="carga-atual" style="font-size: 2em; font-weight: bold; color: #aaa;">0</span>
+            </div>
+            <div id="aviso-sobrecarga" class="sobrecarregado" style="display: none;">
+                ⚠️ SOBRECARGA!
+            </div>
+        </div>
+
+        <h2>Itens & Equipamentos</h2>
+        <table class="tabela-itens" id="tabela-inv">
+            <thead>
+                <tr>
+                    <th style="width: 40%;">Item</th>
+                    <th style="width: 40%;">Notas / Efeito</th>
+                    <th style="width: 10%;">Peso</th>
+                    <th style="width: 10%;">Apagar</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><input type="text" placeholder="Ex: Revólver .38"></td>
+                    <td><input type="text" placeholder="1d10 dano"></td>
+                    <td><input type="number" class="peso-item" value="0" oninput="calcularPeso()"></td>
+                    <td><button class="btn-remover" onclick="removerLinha(this)">X</button></td>
+                </tr>
+            </tbody>
+        </table>
+
+        <button class="btn-adicionar" onclick="adicionarItem()">+ Adicionar Item</button>
+
+        <h2 style="margin-top: 40px;">Finanças</h2>
+        <div class="area-dados">
+            <div class="campo-texto"><label>Nível de Crédito:</label><input type="text"></div>
+            <div class="campo-texto"><label>Dinheiro (Cash):</label><input type="text"></div>
+            <div class="campo-texto full-width"><label>Bens e Ativos:</label><textarea style="height: 100px;"></textarea></div>
+        </div>
+
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
