@@ -1,32 +1,45 @@
 // =================================================================
-// 🔐 SISTEMA DE LOGIN (S.A.D.M.)
+// 🔐 SISTEMA DE LOGIN E SESSÃO (S.A.D.M.)
 // =================================================================
 
+// 1. Função que o botão chama ao digitar a senha
 function acessarSistema() {
-    // 1. Pega o valor que o jogador digitou no campo de senha
     let campoSenha = document.getElementById('codigo-acesso');
     let senhaDigitada = campoSenha.value;
+    let senhaSecreta = "cthulhu2024";
 
-    // 2. Define a senha secreta 
-    let senhaSecreta = "123";
-
-    // 3. Verifica se a senha está correta
     if (senhaDigitada === senhaSecreta) {
+        // SUCESSO! Entrega a "pulseira VIP" ao navegador
+        // sessionStorage guarda este dado enquanto a aba estiver aberta
+        sessionStorage.setItem('acessoSADM', 'autorizado');
         
-        // Se acertou: Esconde a tela de login (usando o ID exato do seu HTML)
+        // Esconde o login e mostra a ficha
         document.getElementById('tela-login-secreta').style.display = 'none';
-        
-        // E mostra o conteúdo principal (a ficha)
         document.getElementById('conteudo-principal').style.display = 'block';
         
     } else {
-        
-        // Se errou: Mostra a sua mensagem vermelha de erro e limpa a senha
+        // ERRO: Mostra mensagem e limpa o campo
         document.getElementById('msg-erro').style.display = 'block';
         campoSenha.value = ""; 
-        
     }
 }
+
+// 2. NOVA FUNÇÃO: Verifica se o agente já tem a pulseira VIP
+function verificarAcessoPrevio() {
+    // Procura no navegador se o acesso já foi autorizado antes
+    let acesso = sessionStorage.getItem('acessoSADM');
+    
+    // Se o valor for 'autorizado', pula a tela de login automaticamente
+    if (acesso === 'autorizado') {
+        document.getElementById('tela-login-secreta').style.display = 'none';
+        document.getElementById('conteudo-principal').style.display = 'block';
+    }
+}
+
+// 3. Dispara a verificação assim que a página termina de carregar
+// Isso garante que a verificação ocorra na fração de segundo em que o jogador volta do Inventário
+window.addEventListener('DOMContentLoaded', verificarAcessoPrevio);
+
 // =================================================================
 // 💾 EXPORTAR FICHA (Gera o arquivo .json automaticamente)
 // =================================================================
