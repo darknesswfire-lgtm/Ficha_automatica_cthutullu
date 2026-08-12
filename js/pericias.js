@@ -95,4 +95,93 @@ function calcPericia(input) {
     }
 }
 
+// =================================================================
+// 🎯 GESTÃO DE PERÍCIAS E ESPECIALIZAÇÕES
+// =================================================================
 
+/**
+ * Adiciona uma nova especialização dentro de um container específico.
+ * @param {string} idContainer - O ID da div que receberá a nova linha.
+ * @param {number} valorBase - O valor numérico inicial (padrão 0).
+ */
+function addEspecializacao(idContainer, valorBase = 0) {
+    const container = document.getElementById(idContainer);
+
+    if (!container) {
+        console.error(`❌ Erro: O container '${idContainer}' não foi encontrado!`);
+        return;
+    }
+
+    const metade = Math.floor(valorBase / 2);
+    const quinto = Math.floor(valorBase / 5);
+
+    const novaLinha = document.createElement('div');
+    novaLinha.className = 'item-pericia item-especializacao';
+
+    novaLinha.innerHTML = `
+        <input type="checkbox" class="check-evoluir" title="Marque para testar evolução">
+        <input type="text" class="input-nome-spec" placeholder="Especialização..." value="">
+        
+        <div class="bloco-valores-pericia">
+            <div class="campo-valor">
+                <span class="rotulo-valor">Total</span>
+                <input type="number" class="val-pericia" value="${valorBase}" min="0" max="99" oninput="atualizarMetadeQuinto(this)">
+            </div>
+            <div class="campo-valor derivado">
+                <span class="rotulo-valor">1/2</span>
+                <span class="val-metade">${metade}</span>
+            </div>
+            <div class="campo-valor derivado">
+                <span class="rotulo-valor">1/5</span>
+                <span class="val-quinto">${quinto}</span>
+            </div>
+        </div>
+
+        <button type="button" class="btn-remover" onclick="removerPericiaCustomizada(this)" title="Remover">❌</button>
+    `;
+
+    container.appendChild(novaLinha);
+
+    if (typeof salvarAutomaticamente === "function") {
+        salvarAutomaticamente();
+    }
+}
+
+/**
+ * Recalcula as frações de 1/2 e 1/5 em tempo real quando o valor muda.
+ * @param {HTMLInputElement} inputNumero - O campo numérico alterado.
+ */
+function atualizarMetadeQuinto(inputNumero) {
+    const valor = parseInt(inputNumero.value) || 0;
+    const linha = inputNumero.closest('.item-pericia');
+    
+    if (linha) {
+        const campoMetade = linha.querySelector('.val-metade');
+        const campoQuinto = linha.querySelector('.val-quinto');
+        
+        if (campoMetade) campoMetade.textContent = Math.floor(valor / 2);
+        if (campoQuinto) campoQuinto.textContent = Math.floor(valor / 5);
+    }
+
+    if (typeof salvarAutomaticamente === "function") {
+        salvarAutomaticamente();
+    }
+}
+
+/**
+ * Localiza a linha do elemento clicado e remove do HTML.
+ * @param {HTMLElement} botao - O botão ❌ clicado pelo jogador.
+ */
+function removerPericiaCustomizada(botao) {
+    // Procura o elemento pai mais próximo que possui a classe .item-pericia
+    const linhaPericia = botao.closest('.item-pericia');
+
+    if (linhaPericia) {
+        linhaPericia.remove(); // Remove o elemento do HTML
+
+        // Atualiza o salvamento automático do navegador
+        if (typeof salvarAutomaticamente === "function") {
+            salvarAutomaticamente();
+        }
+    }
+}

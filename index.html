@@ -7,6 +7,7 @@
     <script src="./js/pericias.js"defer></script>
     <script src="./js/inventario.js"defer></script>
     <script src="./js/armazenamento.js"defer></script>
+    <script src="./js/foto.js"defer></script>
     <link rel="stylesheet" href="./style.css">
     <title>Ficha Automatizada - Call of Cthulhu</title>
 </head>
@@ -54,8 +55,8 @@
         <header class="barra-controle">
             <!-- Grupo 1: Ferramentas de Jogo -->
             <div class="grupo-botoes">
-                <button class="btn-controle" onclick="window.location.href='inventario.html'">🎒 Inventário</button>
-                <button class="btn-controle" onclick="window.location.href='combate.html'">⚔️ Combate</button>
+                <button class="btn-controle" onclick="window.location.href='inventario.html'"> Inventário</button>
+                <button class="btn-controle" onclick="window.location.href='combate.html'"> Combate</button>
                 <button class="btn-controle" onclick="window.print()">🖨️ Imprimir PDF</button>
             </div>
             
@@ -78,21 +79,24 @@ deve ficar AQUI DENTRO, antes de fechar a tag </main> abaixo! -->
     <div id="aba-ficha" class="conteudo-aba ativa">
         <h2>Dados do Investigador</h2>
         
-        <div class="foto-container" style="display: flex; justify-content: flex-start; margin-bottom: 20px;">
-            
-            <div style="position: relative; width: 512px; height: 512px; border: 2px dashed #555; display: flex; align-items: center; justify-content: center; overflow: hidden; background: #222; border-radius: 4px;">
-                
-                <span class="texto-upload" onclick="document.getElementById('upload-foto').click()" style="cursor: pointer; color: #aaa; text-align: center; font-size: 1.2em;">
-                    FOTO<br>512px
-                </span>
 
-                <img id="img-preview" src="" style="display: none; width: 100%; height: 100%; object-fit: cover; cursor: pointer;" onclick="document.getElementById('upload-foto').click()">
+<div class="foto-container" style="display: flex; justify-content: flex-start; margin-bottom: 20px;">
+    
+    <!-- Adicionado o id="quadro-foto-512" nesta div -->
+    <div id="quadro-foto-512" style="position: relative; width: 512px; height: 512px; border: 2px dashed #555; display: flex; align-items: center; justify-content: center; overflow: hidden; background: #222; border-radius: 4px;">
 
-                <button id="btn-remove-foto" onclick="removerFoto(event)" style="position: absolute; top: 0; right: 0; background: rgba(255,0,0,0.8); color: white; border: none; width: 30px; height: 30px; display: none; cursor: pointer; z-index: 10; font-size: 16px;">X</button>
-            </div>
+        <span class="texto-upload" onclick="document.getElementById('upload-foto').click()" style="cursor: pointer; color: #aaa; text-align: center; font-size: 1.2em;">
+            FOTO<br>512px
+        </span>
 
-            <input type="file" id="upload-foto" accept="image/*" onchange="carregarFoto(event)" style="display: none;">
-        </div>
+        <img id="img-preview" src="" style="display: none; width: 100%; height: 100%; object-fit: cover; cursor: pointer;" onclick="document.getElementById('upload-foto').click()">
+
+        <button id="btn-remove-foto" onclick="removerFoto(event)" style="position: absolute; top: 0; right: 0; background: rgba(255,0,0,0.8); color: white; border: none; width: 30px; height: 30px; display: none; cursor: pointer; z-index: 10; font-size: 16px;">X</button>
+    </div>
+
+    <input type="file" id="upload-foto" accept="image/*" onchange="carregarFoto(event)" style="display: none;">
+</div>
+
         <div class="area-dados">
             <div class="campo-texto">
                 <label>Nome:</label>
@@ -333,7 +337,7 @@ deve ficar AQUI DENTRO, antes de fechar a tag </main> abaixo! -->
         <div id="spec-armas" class="container-specs" style="display: none;">
             </div>
     </div>
-
+<br>
     <div class="pericia-item">
         <span class="nome-pericia">Arremessar (20%)</span>
         <input type="number" class="input-pericia" oninput="calcPericia(this)">
@@ -348,7 +352,7 @@ deve ficar AQUI DENTRO, antes de fechar a tag </main> abaixo! -->
         <div id="spec-arte" class="container-specs" style="display: none;">
             </div>
     </div>
-
+<br>
     <div class="pericia-item">
         <span class="nome-pericia">Avaliação (05%)</span>
         <input type="number" class="input-pericia" oninput="calcPericia(this)">
@@ -375,7 +379,7 @@ deve ficar AQUI DENTRO, antes de fechar a tag </main> abaixo! -->
         <div id="spec-ciencia" class="container-specs" style="display: none;">
             </div>
     </div>
-
+<br>
     <div class="pericia-item">
         <span class="nome-pericia">Consertos Elétricos (10%)</span>
         <input type="number" class="input-pericia" oninput="calcPericia(this)">
@@ -462,7 +466,7 @@ deve ficar AQUI DENTRO, antes de fechar a tag </main> abaixo! -->
         <div id="spec-linguas" class="container-specs" style="display: none;">
             </div>
     </div>
-
+<br>
     <div class="pericia-item">
         <span class="nome-pericia">Luta (Briga) (25%)</span>
         <input type="number" class="input-pericia" oninput="calcPericia(this)">
@@ -477,7 +481,7 @@ deve ficar AQUI DENTRO, antes de fechar a tag </main> abaixo! -->
         <div id="spec-luta" class="container-specs" style="display: none;">
             </div>
     </div>
-
+<br>
     <div class="pericia-item">
         <span class="nome-pericia">Medicina (01%)</span>
         <input type="number" class="input-pericia" oninput="calcPericia(this)">
@@ -528,7 +532,7 @@ deve ficar AQUI DENTRO, antes de fechar a tag </main> abaixo! -->
         <div id="spec-pilotar" class="container-specs" style="display: none;">
             </div>
     </div>
-
+<br>
     <div class="pericia-item">
         <span class="nome-pericia">Prestidigitação (10%)</span>
         <input type="number" class="input-pericia" oninput="calcPericia(this)">
@@ -585,19 +589,12 @@ deve ficar AQUI DENTRO, antes de fechar a tag </main> abaixo! -->
 </div>
     </div>
 
-    <div style="text-align: center; margin-top: 50px; margin-bottom: 50px; border-top: 1px solid #444; padding-top: 20px;">
-        <p style="color: #666;">Resetar Ficha</p>
-        <button onclick="resetarFicha()" style="background-color: #800; color: #fff; padding: 10px 20px; border: none; cursor: pointer;">
-            ⚠️ Apagar Tudo e Começar Novo Personagem
-        </button>
-    </div>
-
 
 </body>
 
 
 <div style="position: fixed; bottom: 10px; right: 15px; color: #888; font-size: 14px; font-weight: bold; font-family: monospace; background-color: rgba(255, 255, 255, 0.8); padding: 5px 10px; border-radius: 5px; pointer-events: none; z-index: 1000; border: 1px solid #ccc;">
-        Versão: Beta 0.10
+        Versão: 1.0
 </div>
 
     <footer class="rodape-vinicius">

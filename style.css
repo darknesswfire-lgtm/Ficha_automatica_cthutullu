@@ -711,3 +711,108 @@ input[type=number]::-webkit-outer-spin-button {
     text-align: center;
     margin-top: 50px;
 }
+
+
+
+/* =================================================================
+   ESTILO DAS LINHAS DE ESPECIALIZAÇÃO (1/2 E 1/5)
+================================================================= */
+
+/* Estrutura principal da linha */
+.item-especializacao {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    background-color: #1a1a1a;
+    border: 1px solid #333;
+    border-radius: 6px;
+    padding: 8px 12px;
+    margin-bottom: 8px;
+}
+
+/* Caixa de texto do nome da especialização */
+.input-nome-spec {
+    flex: 1;
+    background-color: #262626;
+    color: #e0e0e0;
+    border: 1px solid #444;
+    border-radius: 4px;
+    padding: 6px 10px;
+    font-size: 14px;
+}
+
+/* Agrupamento dos valores numéricos */
+.bloco-valores-pericia {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+/* Estilo individual para cada coluna de valor (Total, 1/2, 1/5) */
+.campo-valor {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.rotulo-valor {
+    font-size: 10px;
+    color: #a0a0a0;
+    font-weight: bold;
+    margin-bottom: 3px;
+    text-transform: uppercase;
+}
+
+/* Input do valor total */
+.campo-valor input.val-pericia {
+    width: 45px;
+    text-align: center;
+    background-color: #262626;
+    color: #fff;
+    border: 1px solid #555;
+    border-radius: 4px;
+    padding: 4px;
+    font-weight: bold;
+}
+
+/* Caixas de exibição estática para 1/2 e 1/5 */
+.campo-valor.derivado {
+    background-color: #111;
+    border: 1px solid #333;
+    border-radius: 4px;
+    padding: 4px 8px;
+    min-width: 34px;
+    text-align: center;
+}
+
+.val-metade, .val-quinto {
+    font-size: 13px;
+    color: #d4af37; /* Cor dourada envelhecida */
+    font-weight: bold;
+}
+
+/* Botão de exclusão */
+.btn-remover {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    font-size: 14px;
+    opacity: 0.7;
+    transition: opacity 0.2s, transform 0.2s;
+}
+
+.btn-remover:hover {
+    opacity: 1;
+    transform: scale(1.15);
+}
+
+
+/* Ajuste de Proporção e Renderização da Foto */
+#img-preview {
+    width: 100%;
+    height: 100%;
+    /* Mágica do CSS: mantêm a proporção inteira sem achatar nem cortar */
+    object-fit: contain; 
+    background-color: #111; /* Fundo escuro para preencher sobressalentes */
+    image-rendering: -webkit-optimize-contrast; /* Melhora a nitidez */
+}
