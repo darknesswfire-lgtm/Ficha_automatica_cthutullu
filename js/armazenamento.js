@@ -1,26 +1,60 @@
-// =================================================================
-// 🔐 SISTEMA DE LOGIN E SESSÃO (S.A.D.M.)
-// =================================================================
 
 // 1. Função que o botão chama ao digitar a senha
-function acessarSistema() {
-    let campoSenha = document.getElementById('codigo-acesso');
-    let senhaDigitada = campoSenha.value;
-    let senhaSecreta = "123";
+// =================================================================
+// 🔐 AUTENTICAÇÃO COM HASH CRIPTOGRÁFICO (SHA-256)
+// =================================================================
 
-    if (senhaDigitada === senhaSecreta) {
-        // SUCESSO! Entrega a "pulseira VIP" ao navegador
-        // sessionStorage guarda este dado enquanto a aba estiver aberta
+/**
+ * Converte qualquer texto para um Hash SHA-256 usando a Web Crypto API
+ * @param {string} texto - A senha digitada pelo usuário
+ * @returns {Promise<string>} O hash de 64 caracteres
+ */
+async function gerarHashSHA256(texto) {
+    const encoder = new TextEncoder();
+    const dados = encoder.encode(texto);
+    const bufferHash = await crypto.subtle.digest('SHA-256', dados);
+    const arrayHash = Array.from(new Uint8Array(bufferHash));
+    
+    // Converte cada byte em representação hexadecimal de 2 dígitos
+    return arrayHash.map(byte => byte.toString(16).padStart(2, '0')).join('');
+}
+
+/**
+ * Valida a senha digitada comparando os hashes criptográficos
+ */
+async function acessarSistema() {
+    const campoSenha = document.getElementById('codigo-acesso');
+    const msgErro = document.getElementById('msg-erro');
+    const senhaDigitada = campoSenha ? campoSenha.value.trim() : "";
+
+
+    const hashCorreto = "a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3";
+
+    if (!senhaDigitada) {
+        if (msgErro) msgErro.style.display = 'block';
+        return;
+    }
+
+    // Converte a senha digitada no momento para hash
+    const hashDigitado = await gerarHashSHA256(senhaDigitada);
+
+    // Compara os dois hashes
+    if (hashDigitado === hashCorreto) {
+        // Grava a sessão autorizada no navegador
         sessionStorage.setItem('acessoSADM', 'autorizado');
-        
-        // Esconde o login e mostra a ficha
-        document.getElementById('tela-login-secreta').style.display = 'none';
-        document.getElementById('conteudo-principal').style.display = 'block';
-        
+
+        // Transição de tela
+        const telaLogin = document.getElementById('tela-login-secreta');
+        const conteudoPrincipal = document.getElementById('conteudo-principal');
+
+        if (telaLogin) telaLogin.style.display = 'none';
+        if (conteudoPrincipal) conteudoPrincipal.style.display = 'block';
+        if (msgErro) msgErro.style.display = 'none';
+
     } else {
-        // ERRO: Mostra mensagem e limpa o campo
-        document.getElementById('msg-erro').style.display = 'block';
-        campoSenha.value = ""; 
+        // Exibe erro e limpa o campo
+        if (msgErro) msgErro.style.display = 'block';
+        campoSenha.value = "";
     }
 }
 
